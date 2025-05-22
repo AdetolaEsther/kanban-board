@@ -17,7 +17,7 @@ const columns = ["Prospects", "Wireframe", "Design", "Development", "Done"];
 
 const Board = () => {
     return (
-        <Box sx={{ padding: 4, backgroundColor: "#2c2c2c", borderRadius: 2 }}>
+        <Box sx={{ padding: 4, backgroundColor: "#1e1e1e", borderRadius: 2 }}>
             <Typography
                 variant="h5"
                 color="white"
@@ -62,7 +62,7 @@ const Board = () => {
                         elevation={4}
                         sx={{
                             flex: 1,
-                            backgroundColor: "#3a3a3a",
+                            backgroundColor: "#000000",
                             borderRadius: 2,
                             padding: 2,
                             minHeight: "60vh",

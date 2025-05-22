@@ -54,7 +54,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
         >
             <Box
                 sx={{
-                    height: 6,
+                    height: 15,
                     backgroundColor: priorityColors[priority],
                     borderTopLeftRadius: 8,
                     borderTopRightRadius: 8,
@@ -65,9 +65,9 @@ const TaskCard: React.FC<TaskCardProps> = ({
                 <Box
                     sx={{
                         backgroundColor: "#4d4d4d",
-                        borderRadius: 2,
+                        borderRadius: 4,
                         padding: 2,
-                        marginBottom: 2,
+                        // marginBottom: 2,
                     }}
                 >
                     <Typography
