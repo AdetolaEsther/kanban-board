@@ -1,4 +1,3 @@
-// app/layout.tsx
 import "./globals.css";
 import ThemeRegistry from "./ThemeRegistry";
 import type { Metadata } from "next";

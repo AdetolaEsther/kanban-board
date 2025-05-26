@@ -5,46 +5,363 @@ import {
     Stack,
     Typography,
     List,
-    ListItem,
     ListItemText,
     ListItemButton,
+    Divider,
+    Breadcrumbs,
+    Link,
+    Button,
+    IconButton,
 } from "@mui/material";
+import {
+    Add,
+    FilterList,
+    Settings,
+    Download,
+    TrendingUp,
+    Dashboard,
+    Assignment,
+    AccountCircle,
+    Visibility,
+    CalendarToday,
+    Notes,
+    Assessment,
+    Group,
+    Business,
+    Security,
+    Payment,
+    Notifications,
+} from "@mui/icons-material";
 import Board from "./components/Board";
+import LogoDevIcon from "@mui/icons-material/LogoDev";
+import ShareIcon from "@mui/icons-material/Share";
+import AnchorIcon from "@mui/icons-material/Anchor";
+import BoltIcon from "@mui/icons-material/Bolt";
+import HomeIcon from "@mui/icons-material/Home";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
-const NavItems = ["Home", "Tasks", "Teams", "Settings"];
-
-export default function Home() {
+const NavItems = [
+    {
+        name: "Sales CRM",
+        icon: <TrendingUp />,
+        submenu: [{ name: "Overview", icon: <Visibility /> }],
+    },
+    {
+        name: "Dashboard CRM",
+        icon: <Dashboard />,
+        submenu: [
+            { name: "Tasks", icon: <Assignment /> },
+            { name: "Calendars", icon: <CalendarToday /> },
+            { name: "Notes", icon: <Notes /> },
+            { name: "Reports", icon: <Assessment /> },
+            { name: "View", icon: <Visibility /> },
+        ],
+    },
+    {
+        name: "Project Management",
+        icon: <Business />,
+        submenu: [
+            { name: "Team Members", icon: <Group /> },
+            { name: "Departments", icon: <Business /> },
+            { name: "Permissions", icon: <Security /> },
+            { name: "Invitations", icon: <Group /> },
+        ],
+    },
+    {
+        name: "Settings",
+        icon: <Settings />,
+        submenu: [
+            { name: "Profile", icon: <AccountCircle /> },
+            { name: "Notifications", icon: <Notifications /> },
+            { name: "Security", icon: <Security /> },
+            { name: "Billing", icon: <Payment /> },
+        ],
+    },
+];
+const Home = () => {
     return (
         <Box p={4}>
-            <Typography variant="h4" textAlign="center" fontWeight={600} mb={4}>
-                KANBAN BOARD
-            </Typography>
-
             <Stack direction="row" spacing={2}>
                 <Box
-                    width="30%"
-                    minWidth={100}
-                    bgcolor="	#1e1e1e"
+                    width="15%"
+                    minWidth={200}
+                    bgcolor="#0a0a0a"
                     p={1}
                     borderRadius={2}
                     boxShadow={2}
                 >
-                    <Typography variant="h6" fontWeight={500} mb={2}>
-                        Navigation
-                    </Typography>
-                    <List>
+                    <Stack direction="row" alignItems="center" mb={2}>
+                        <LogoDevIcon sx={{ color: "#8F87F1" }} />
+                        <Typography variant="h6" fontWeight={500} color="white">
+                            Project Inc.
+                        </Typography>
+                    </Stack>
+                    <List sx={{ py: 0 }}>
                         {NavItems.map((item, index) => (
-                            <ListItemButton key={index}>
-                                <ListItemText primary={item} />
-                            </ListItemButton>
+                            <Box key={index} sx={{ mb: 1 }}>
+                                <ListItemButton
+                                    sx={{
+                                        color: "#fff",
+                                        px: 1.5,
+                                        borderRadius: 2,
+                                        minHeight: 40,
+                                        fontSize: "10px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        py: 1,
+
+                                        "&:hover": {
+                                            backgroundColor: "#171717",
+                                            border: "2px solid #000",
+                                            boxShadow:
+                                                "0px 2px 6px rgba(0, 0, 0, 0.4)",
+                                        },
+                                    }}
+                                >
+                                    <Box
+                                        sx={{
+                                            mr: 1,
+                                            display: "flex",
+                                            alignItems: "center",
+                                            "& svg": {
+                                                fontSize: "14px",
+                                            },
+                                        }}
+                                    >
+                                        {item.icon}
+                                    </Box>
+                                    <ListItemText
+                                        primary={item.name}
+                                        primaryTypographyProps={{
+                                            fontSize: "10px",
+                                            fontWeight: 500,
+                                        }}
+                                    />
+                                </ListItemButton>
+
+                                <List
+                                    component="div"
+                                    disablePadding
+                                    sx={{ ml: 1, mt: 0.5 }}
+                                >
+                                    {item.submenu.map((subItem, subIndex) => (
+                                        <ListItemButton
+                                            key={subIndex}
+                                            sx={{
+                                                pl: 3,
+                                                py: 0.5,
+                                                minHeight: 32,
+                                                color: "#ccc",
+                                                fontSize: "9px",
+                                                borderRadius: 1.5,
+                                                mb: 0.5,
+
+                                                "& svg": {
+                                                    fontSize: "12px",
+                                                    mr: 1,
+                                                },
+
+                                                "&:hover": {
+                                                    color: "white",
+                                                    backgroundColor: "#121212",
+                                                    border: "1px solid #000",
+                                                    boxShadow:
+                                                        "0px 2px 4px rgba(0, 0, 0, 0.3)",
+                                                },
+                                            }}
+                                        >
+                                            <Box
+                                                sx={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                }}
+                                            >
+                                                {subItem.icon}
+                                            </Box>
+                                            <ListItemText
+                                                primary={subItem.name}
+                                                primaryTypographyProps={{
+                                                    fontSize: "9px",
+                                                }}
+                                            />
+                                        </ListItemButton>
+                                    ))}
+                                </List>
+                            </Box>
                         ))}
                     </List>
                 </Box>
 
                 <Box flex={1}>
+                    <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        mb={2}
+                    >
+                        <Typography variant="h4" fontWeight={600}>
+                            Dashboard CRM
+                        </Typography>
+
+                        <Stack direction="row">
+                            <Button
+                                variant="outlined"
+                                startIcon={
+                                    <BoltIcon sx={{ fontSize: "10px" }} />
+                                }
+                                sx={{
+                                    color: "#fff",
+                                    border: "2px solid",
+                                    borderColor: "#000",
+                                    backgroundColor: "#171717",
+                                    fontSize: "10px",
+                                    px: 1.5,
+                                    borderRadius: 2,
+                                    minHeight: 32,
+                                    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
+                                }}
+                            >
+                                Upgrade
+                            </Button>
+                        </Stack>
+                    </Stack>
+
+                    <Stack
+                        direction="row"
+                        spacing={2}
+                        alignItems={"flex-start"}
+                        justifyContent={"space-between"}
+                        mb={2}
+                    >
+                        <Stack direction="row" spacing={2} alignItems="center">
+                            <Typography variant="body1" color="#ccc">
+                                Total Tasks: <strong>{6}</strong>
+                            </Typography>
+                            <Divider
+                                orientation="vertical"
+                                flexItem
+                                sx={{ borderColor: "#555" }}
+                            />
+                            <Typography variant="body2" color="#999">
+                                Last updated 4 hours ago
+                            </Typography>
+                        </Stack>
+
+                        <Stack direction="row" spacing={1}>
+                            <Button
+                                variant="outlined"
+                                startIcon={
+                                    <ShareIcon sx={{ fontSize: "10px" }} />
+                                }
+                                sx={{
+                                    color: "#fff",
+                                    border: "2px solid",
+                                    borderColor: "#000",
+                                    backgroundColor: "#171717",
+                                    fontSize: "10px",
+                                    px: 1.5,
+                                    borderRadius: 2,
+                                    minHeight: 32,
+                                    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
+                                }}
+                            >
+                                Share
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                startIcon={
+                                    <AnchorIcon sx={{ fontSize: "small" }} />
+                                }
+                                sx={{
+                                    color: "#fff",
+                                    border: "2px solid",
+                                    borderColor: "#000",
+                                    backgroundColor: "#171717",
+                                    fontSize: "10px",
+                                    px: 1.5,
+                                    borderRadius: 2,
+                                    minHeight: 32,
+                                    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
+                                }}
+                            >
+                                Request
+                            </Button>
+                            <IconButton
+                                sx={{
+                                    color: "#fff",
+                                    border: "2px solid",
+                                    borderColor: "#000",
+                                    backgroundColor: "#171717",
+                                    borderRadius: 2,
+                                    width: 32,
+                                    height: 32,
+                                    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
+                                }}
+                            >
+                                <Download sx={{ fontSize: "18px" }} />
+                            </IconButton>
+
+                            <IconButton
+                                sx={{
+                                    color: "#fff",
+                                    border: "2px solid",
+                                    borderColor: "#000",
+                                    backgroundColor: "#171717",
+                                    borderRadius: 2,
+                                    width: 32,
+                                    height: 32,
+                                    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
+                                }}
+                            >
+                                <Settings />
+                            </IconButton>
+                        </Stack>
+                    </Stack>
+
+                    <Breadcrumbs
+                        separator="/"
+                        aria-label="breadcrumb"
+                        sx={{ color: "#bbb", mb: 2 }}
+                    >
+                        <Link
+                            underline="hover"
+                            color="inherit"
+                            href=""
+                            sx={{ display: "flex", alignItems: "center" }}
+                        >
+                            <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+                            Home
+                        </Link>
+                        <Link
+                            underline="hover"
+                            color="inherit"
+                            href=""
+                            sx={{ display: "flex", alignItems: "center" }}
+                        >
+                            <DashboardIcon
+                                sx={{ mr: 0.5 }}
+                                fontSize="inherit"
+                            />
+                            Dashboard
+                        </Link>
+                        <Typography
+                            color="#888"
+                            sx={{ display: "flex", alignItems: "center" }}
+                        >
+                            <AssignmentIcon
+                                sx={{ mr: 0.5 }}
+                                fontSize="inherit"
+                            />
+                            Tasks
+                        </Typography>
+                    </Breadcrumbs>
+
                     <Board />
                 </Box>
             </Stack>
         </Box>
     );
-}
+};
+export default Home;
+
