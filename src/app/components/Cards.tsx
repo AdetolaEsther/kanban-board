@@ -6,33 +6,21 @@ import {
     CardContent,
     Typography,
     Box,
-    MenuItem,
-    Select,
     Stack,
     Avatar,
     IconButton,
     Tooltip,
 } from "@mui/material";
 import { Comment, AttachFile, Description } from "@mui/icons-material";
-
-type Priority = "low" | "moderate" | "high" | "bug";
-type Status = "TODO" | "IN PROGRESS" | "REVIEW" | "REWORK" | "DONE";
+import { Priority, TaskCardProps } from "../types";
+import theme from "../theme";
 
 const priorityColors: Record<Priority, string> = {
-    high: "#FF4C4C",
-    moderate: "#FFD700",
-    low: "#4CAF50",
-        bug: "#2196F3",
+    high: "#F93827",
+    moderate: "#F4631E",
+    low: "#3E7B27",
+    bug: "#00A9FF",
 };
-
-interface TaskCardProps {
-    priority: Priority;
-    title: string;
-    description: string;
-    assigneeInitial?: string;
-    status: Status;
-    date: string;
-}
 
 const TaskCard: React.FC<TaskCardProps> = ({
     priority,
@@ -42,95 +30,88 @@ const TaskCard: React.FC<TaskCardProps> = ({
     status,
     date,
 }) => {
-    const [taskStatus, setTaskStatus] = React.useState<Status>(status);
-
     return (
         <Card
             sx={{
-                backgroundColor: "#3c3c3c",
+                backgroundColor: theme.palette.background.paper,
                 borderRadius: 2,
+                boxShadow: "0 0 0 1px #333",
+                overflow: "hidden",
                 position: "relative",
+                mb: 1.5,
             }}
         >
             <Box
                 sx={{
-                    height: 15,
                     backgroundColor: priorityColors[priority],
-                    borderTopLeftRadius: 8,
-                    borderTopRightRadius: 8,
+                    height: 24,
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontWeight: "bold",
+                    fontSize: 10,
+                    textTransform: "uppercase",
                 }}
-            />
+            >
+                {priority} Priority
+            </Box>
 
-            <CardContent sx={{ padding: 2 }}>
+            <CardContent sx={{ padding: 2, borderRadius: 2 }}>
                 <Box
                     sx={{
-                        backgroundColor: "#4d4d4d",
-                        borderRadius: 4,
-                        padding: 2,
-                        // marginBottom: 2,
+                        border: `1px dotted ${theme.palette.text.primary}`,
+                        borderRadius: 2,
+                        padding: 1.5,
+                        mb: 1.5,
                     }}
                 >
-                    <Typography
-                        variant="subtitle2"
-                        color="white"
-                        fontWeight="bold"
-                        gutterBottom
-                    >
-                        {title}
-                    </Typography>
-                    <Typography variant="body2" color="#ccc" gutterBottom>
-                        {description}
-                    </Typography>
-
-                    <Stack
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="space-between"
-                        gap={2}
-                    >
-                        <Avatar
-                            sx={{
-                                width: 24,
-                                height: 24,
-                                fontSize: 12,
-                                bgcolor: "#999",
-                            }}
+                    <Stack spacing={1}>
+                        <Typography
+                            variant="subtitle2"
+                            color={theme.palette.text.primary}
+                            fontWeight="bold"
+                            lineHeight={1.3}
                         >
-                            {assigneeInitial}
-                        </Avatar>
-
-                        <Select
-                            value={taskStatus}
-                            onChange={(e) =>
-                                setTaskStatus(e.target.value as Status)
-                            }
-                            variant="outlined"
-                            size="small"
-                            sx={{
-                                color: "white",
-                                borderColor: "white",
-                                fontSize: 12,
-                                minWidth: 120,
-                                "& .MuiOutlinedInput-notchedOutline": {
-                                    borderColor: "#888",
-                                },
-                                "& .MuiSvgIcon-root": {
-                                    color: "white",
-                                },
-                            }}
+                            {title}
+                        </Typography>
+                        <Typography
+                            variant="body2"
+                            color={theme.palette.text.secondary}
+                            fontSize={12}
                         >
-                            {[
-                                "TODO",
-                                "IN PROGRESS",
-                                "REVIEW",
-                                "REWORK",
-                                "DONE",
-                            ].map((option) => (
-                                <MenuItem key={option} value={option}>
-                                    {option}
-                                </MenuItem>
-                            ))}
-                        </Select>
+                            {description}
+                        </Typography>
+                        <Stack
+                            direction="row"
+                            alignItems="center"
+                            justifyContent="space-between"
+                        >
+                            <Avatar
+                                sx={{
+                                    width: 24,
+                                    height: 24,
+                                    fontSize: 12,
+                                    bgcolor: "#444", 
+                                }}
+                            >
+                                {assigneeInitial}
+                            </Avatar>
+                            <Typography
+                                sx={{
+                                    backgroundColor: "#333",
+                                    color: "#666",
+                                    fontSize: 10,
+                                    px: 1,
+                                    py: 0.25,
+                                    borderRadius: 1,
+                                    border: "1px solid #666",
+                                    textTransform: "uppercase",
+                                }}
+                            >
+                                {status}
+                            </Typography>
+                        </Stack>
                     </Stack>
                 </Box>
 
@@ -139,32 +120,45 @@ const TaskCard: React.FC<TaskCardProps> = ({
                     justifyContent="space-between"
                     alignItems="center"
                 >
-                    <Stack direction="row" spacing={1}>
+                    <Stack direction="row" spacing={0.5}>
                         <Tooltip title="Comments">
                             <IconButton size="small">
                                 <Comment
-                                    fontSize="small"
-                                    sx={{ color: "#aaa", fontSize: 10 }}
+                                    sx={{
+                                        color: theme.palette.text.secondary,
+                                        fontSize: 14,
+                                    }}
                                 />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Attachments">
                             <IconButton size="small">
                                 <AttachFile
-                                    sx={{ color: "#aaa", fontSize: 10 }}
+                                    sx={{
+                                        color: theme.palette.text.secondary,
+                                        fontSize: 14,
+                                    }}
                                 />
                             </IconButton>
                         </Tooltip>
-                        <Tooltip title="File">
+                        <Tooltip title="Files">
                             <IconButton size="small">
                                 <Description
-                                    fontSize="small"
-                                    sx={{ color: "#aaa", fontSize: 10 }}
+                                    sx={{
+                                        color: theme.palette.text.secondary,
+                                        fontSize: 14,
+                                    }}
                                 />
                             </IconButton>
                         </Tooltip>
                     </Stack>
-                    <Typography variant="caption" color="#aaa" sx={{fontSize:10}}>
+                    <Typography
+                        variant="caption"
+                        sx={{
+                            fontSize: 10,
+                            color: theme.palette.text.secondary,
+                        }}
+                    >
                         {date}
                     </Typography>
                 </Stack>

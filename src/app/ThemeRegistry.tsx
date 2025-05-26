@@ -1,7 +1,7 @@
 "use client";
 
 import { ThemeProvider } from "@mui/material/styles";
-import theme from "./theme"; // adjust path if needed
+import theme from "./theme"; 
 
 export default function ThemeRegistry({
     children,
