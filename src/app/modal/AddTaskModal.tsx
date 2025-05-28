@@ -1,7 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
-import { Modal,Box, Typography,TextField,Button,MenuItem,Stack,} from "@mui/material";
+import React from "react";
+import {
+    Modal,
+    Box,
+    Typography,
+    TextField,
+    Button,
+    MenuItem,
+    Stack,
+} from "@mui/material";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { Priority, Status } from "../types";
 
 interface AddTaskModalProps {
@@ -32,29 +42,48 @@ const style = {
     color: "#fff",
 };
 
-export default function AddTaskModal({open,onClose, onAddTask,}: AddTaskModalProps) {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [priority, setPriority] = useState<Priority>("moderate");
-    const [assigneeInitial, setAssigneeInitial] = useState("");
-    const [status, setStatus] = useState<Status>("TODO");
 
-    const handleSubmit = () => {
-        if (!title.trim()) return alert("Title is required");
-        onAddTask({
-            title,
-            description,
-            priority,
-            assigneeInitial: assigneeInitial.toUpperCase(),
-            status,
-        });
-        setTitle("");
-        setDescription("");
-        setPriority("moderate");
-        setAssigneeInitial("");
-        setStatus("TODO");
-        onClose();
-    };
+export default function AddTaskModal({
+    open,
+    onClose,
+    onAddTask,
+}: AddTaskModalProps) {
+    const formik = useFormik({
+        initialValues: {
+            title: "",
+            description: "",
+            priority: "moderate" as Priority,
+            assigneeName: "", 
+            status: "TODO" as Status,
+        },
+        validationSchema: Yup.object({
+            title: Yup.string().required("Title is required"),
+            priority: Yup.string()
+                .oneOf(priorityOptions)
+                .required("Priority is required"),
+            assigneeName: Yup.string().required("Assignee name is required"),
+            status: Yup.string()
+                .oneOf(statusOptions)
+                .required("Status is required"),
+        }),
+        onSubmit: (values) => {
+            const names = values.assigneeName.trim().split(" ");
+            const initials =
+                names.length > 1
+                    ? (names[0][0] + names[names.length - 1][0]).toUpperCase()
+                    : names[0][0].toUpperCase();
+
+            onAddTask({
+                title: values.title,
+                description: values.description,
+                priority: values.priority,
+                assigneeInitial: initials,
+                status: values.status,
+            });
+            formik.resetForm();
+            onClose();
+        },
+    });
 
     return (
         <Modal open={open} onClose={onClose}>
@@ -62,76 +91,112 @@ export default function AddTaskModal({open,onClose, onAddTask,}: AddTaskModalPro
                 <Typography variant="h6" mb={2}>
                     Add New Task
                 </Typography>
-                <Stack spacing={2}>
-                    <TextField
-                        label="Title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        fullWidth
-                        size="small"
-                        autoFocus
-                    />
-                    <TextField
-                        label="Description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        fullWidth
-                        size="small"
-                        multiline
-                        rows={3}
-                    />
-                    <TextField
-                        select
-                        label="Priority"
-                        value={priority}
-                        onChange={(e) =>
-                            setPriority(e.target.value as Priority)
-                        }
-                        fullWidth
-                        size="small"
-                    >
-                        {priorityOptions.map((option) => (
-                            <MenuItem key={option} value={option}>
-                                {option.charAt(0).toUpperCase() +
-                                    option.slice(1)}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                    <TextField
-                        label="Assignee Initial"
-                        value={assigneeInitial}
-                        onChange={(e) =>
-                            setAssigneeInitial(e.target.value.slice(0, 1))
-                        }
-                        inputProps={{ maxLength: 1 }}
-                        fullWidth
-                        size="small"
-                    />
-                    <TextField
-                        select
-                        label="Status"
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value as Status)}
-                        fullWidth
-                        size="small"
-                    >
-                        {statusOptions.map((option) => (
-                            <MenuItem key={option} value={option}>
-                                {option.charAt(0).toUpperCase() +
-                                    option.slice(1)}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                    <Box textAlign="right">
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleSubmit}
+                <form onSubmit={formik.handleSubmit}>
+                    <Stack spacing={2}>
+                        <TextField
+                            label="Title"
+                            name="title"
+                            value={formik.values.title}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            fullWidth
+                            size="small"
+                            // autoFocus
+                            error={
+                                formik.touched.title &&
+                                Boolean(formik.errors.title)
+                            }
+                        />
+                        <TextField
+                            label="Description"
+                            name="description"
+                            value={formik.values.description}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            fullWidth
+                            size="small"
+                            multiline
+                            rows={3}
+                        />
+                        <TextField
+                            select
+                            label="Priority"
+                            name="priority"
+                            value={formik.values.priority}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            fullWidth
+                            size="small"
+                            error={
+                                formik.touched.priority &&
+                                Boolean(formik.errors.priority)
+                            }
+                            helperText={
+                                formik.touched.priority &&
+                                formik.errors.priority
+                            }
                         >
-                            Add Task
-                        </Button>
-                    </Box>
-                </Stack>
+                            {priorityOptions.map((option) => (
+                                <MenuItem key={option} value={option}>
+                                    {option.charAt(0).toUpperCase() +
+                                        option.slice(1)}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        <TextField
+                            label="Assignee Name"
+                            name="assigneeName"
+                            value={formik.values.assigneeName}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            fullWidth
+                            size="small"
+                            error={
+                                formik.touched.assigneeName &&
+                                Boolean(formik.errors.assigneeName)
+                            }
+                            helperText={
+                                formik.touched.assigneeName &&
+                                formik.errors.assigneeName
+                            }
+                        />
+
+                        <TextField
+                            select
+                            label="Status"
+                            name="status"
+                            value={formik.values.status}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            fullWidth
+                            size="small"
+                            error={
+                                formik.touched.status &&
+                                Boolean(formik.errors.status)
+                            }
+                            helperText={
+                                formik.touched.status && formik.errors.status
+                            }
+                        >
+                            {statusOptions.map((option) => (
+                                <MenuItem key={option} value={option}>
+                                    {option.charAt(0).toUpperCase() +
+                                        option.slice(1)}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        <Box textAlign="right">
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                disabled={formik.isSubmitting}
+                            >
+                                Add Task
+                            </Button>
+                        </Box>
+                    </Stack>
+                </form>
             </Box>
         </Modal>
     );

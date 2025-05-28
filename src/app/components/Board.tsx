@@ -26,7 +26,7 @@ const DroppableColumn = ({
 }: {
     columnId: string;
     title: string;
-    tasks: any[];
+    tasks: TaskCardProps[];
     children: React.ReactNode;
     onAddTask: () => void;
 }) => {
@@ -40,13 +40,17 @@ const DroppableColumn = ({
             elevation={4}
             sx={{
                 flex: 1,
-                backgroundColor: isOver ? "#1a1a1a" : "#000000",
-                borderRadius: 2,
-                padding: 2,
+                backgroundColor: isOver
+                    ? theme.palette.action.selected
+                    : theme.palette.background.paper,
+                borderRadius: theme.shape.borderRadiusSmall,
+                padding: theme.spacing(2),
                 minHeight: "100%",
                 display: "flex",
                 flexDirection: "column",
-                border: isOver ? "2px dashed #7f5af0" : "2px solid transparent",
+                border: isOver
+                    ? `2px dashed ${theme.palette.primary.main}`
+                    : "2px solid transparent",
                 transition: "all 0.2s ease",
             }}
         >
@@ -59,7 +63,7 @@ const DroppableColumn = ({
                     <Typography
                         variant="subtitle1"
                         fontWeight={600}
-                        color="#fff"
+                        color={theme.palette.text.primary}
                     >
                         {title}
                     </Typography>
@@ -67,15 +71,18 @@ const DroppableColumn = ({
                         <IconButton
                             onClick={onAddTask}
                             sx={{
-                                color: "#fff",
-                                backgroundColor: "#171717",
-                                border: "2px solid",
-                                borderColor: "#000",
-                                borderRadius: 2,
+                                color: theme.palette.text.primary,
+                                backgroundColor:
+                                    theme.palette.background.default,
+                                borderRadius: theme.shape.borderRadiusSmall,
                                 width: 32,
                                 height: 32,
                                 ml: 0.5,
                                 boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
+                                "&:hover": {
+                                    backgroundColor: theme.palette.action.hover,
+                                    borderColor: theme.palette.primary.main,
+                                },
                             }}
                         >
                             <AddIcon
@@ -84,15 +91,18 @@ const DroppableColumn = ({
                         </IconButton>
                         <IconButton
                             sx={{
-                                color: "#fff",
-                                border: "2px solid",
-                                borderColor: "#000",
-                                backgroundColor: "#171717",
-                                borderRadius: 2,
+                                color: theme.palette.text.primary,
+                                backgroundColor:
+                                    theme.palette.background.default,
+                                borderRadius: theme.shape.borderRadiusSmall,
                                 width: 32,
                                 height: 32,
                                 ml: 0.5,
                                 boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
+                                "&:hover": {
+                                    backgroundColor: theme.palette.action.hover,
+                                    borderColor: theme.palette.primary.main,
+                                },
                             }}
                         >
                             <MoreHorizIcon
@@ -107,20 +117,22 @@ const DroppableColumn = ({
                     alignItems="center"
                     justifyContent="space-between"
                 >
-                    <Typography variant="caption" color="#888">
+                    <Typography
+                        variant="caption"
+                        color={theme.palette.text.disabled}
+                    >
                         {tasks.length} Tasks
                     </Typography>
-                    <Typography variant="caption" color="#888">
+                    <Typography
+                        variant="caption"
+                        color={theme.palette.text.disabled}
+                    >
                         updated: 4 hours ago
                     </Typography>
                 </Stack>
             </Stack>
 
-            <Stack
-                spacing={2}
-                flexGrow={1}
-                sx={{ overflowY: "auto", minHeight: 200 }}
-            >
+            <Stack spacing={2} sx={{ overflowY: "auto", minHeight: 200 }}>
                 {children}
             </Stack>
 
@@ -130,7 +142,7 @@ const DroppableColumn = ({
                 startIcon={<AddIcon />}
                 sx={{
                     mt: 2,
-                    color: "#888",
+                    color: theme.palette.text.disabled,
                     justifyContent: "flex-start",
                     textTransform: "none",
                 }}
@@ -224,7 +236,13 @@ const Board = () => {
         ? tasks.find((task) => String(task.id) === activeId)
         : null;
     return (
-        <Box sx={{ padding: 4, backgroundColor: "#1e1e1e", borderRadius: 2 }}>
+        <Box
+            sx={{
+                padding: 4,
+                backgroundColor: theme.palette.background.paper,
+                borderRadius: theme.shape.borderRadius,
+            }}
+        >
             <Stack direction="row" spacing={2} alignItems="center" mb={2}>
                 <Stack
                     direction="row"
@@ -237,8 +255,8 @@ const Board = () => {
                     <Stack
                         direction="row"
                         sx={{
-                            backgroundColor: theme.palette.background.default,
-                            borderRadius: 2,
+                            backgroundColor: theme.palette.background.paper,
+                            borderRadius: theme.shape.borderRadiusSmall,
                         }}
                     >
                         <Button
@@ -252,10 +270,10 @@ const Board = () => {
                                 color: theme.palette.text.primary,
                                 border: "2px solid",
                                 borderColor: "#000",
-                                backgroundColor: theme.palette.background.paper,
+                                backgroundColor: theme.palette.primary.main,
                                 fontSize: "10px",
                                 px: 1.5,
-                                borderRadius: 2,
+                                borderRadius: 1,
                                 minHeight: 32,
                                 boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
                             }}
@@ -271,10 +289,10 @@ const Board = () => {
                                 color: theme.palette.text.primary,
                                 border: "2px solid",
                                 borderColor: "#000",
-                                backgroundColor: theme.palette.background.paper,
+                                backgroundColor: theme.palette.primary.main,
                                 fontSize: "10px",
                                 px: 1.5,
-                                borderRadius: 2,
+                                borderRadius: 1,
                                 minHeight: 32,
                                 boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
                             }}
@@ -290,10 +308,10 @@ const Board = () => {
                                 color: theme.palette.text.primary,
                                 border: "2px solid",
                                 borderColor: "#000",
-                                backgroundColor: theme.palette.background.paper,
+                                backgroundColor: theme.palette.primary.main,
                                 fontSize: "10px",
                                 px: 1.5,
-                                borderRadius: 2,
+                                borderRadius: 1,
                                 minHeight: 32,
                                 boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
                             }}
@@ -320,10 +338,10 @@ const Board = () => {
                                 color: theme.palette.text.primary,
                                 border: "2px solid",
                                 borderColor: "#000",
-                                backgroundColor: theme.palette.background.paper,
+                                backgroundColor: theme.palette.primary.main,
                                 fontSize: "10px",
                                 px: 1.5,
-                                borderRadius: 2,
+                                borderRadius: 1,
                                 minHeight: 32,
                                 boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
                             }}
@@ -339,10 +357,10 @@ const Board = () => {
                                 color: theme.palette.text.primary,
                                 border: "2px solid",
                                 borderColor: "#000",
-                                backgroundColor: theme.palette.background.paper,
+                                backgroundColor: theme.palette.primary.main,
                                 fontSize: "10px",
                                 px: 1.5,
-                                borderRadius: 2,
+                                borderRadius: 1,
                                 minHeight: 32,
                                 boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
                             }}
@@ -354,13 +372,15 @@ const Board = () => {
                             startIcon={<AddIcon sx={{ fontSize: "16px" }} />}
                             onClick={() => setModalOpen(true)}
                             sx={{
-                                backgroundColor: theme.palette.primary.main,
+                                color: theme.palette.text.primary,
+                                border: "2px solid",
+                                borderColor: "#000",
+                                backgroundColor: theme.palette.primary.light,
                                 fontSize: "10px",
                                 px: 1.5,
-                                borderRadius: 2,
+                                borderRadius: 1,
                                 minHeight: 32,
-                                boxShadow:
-                                    "0px 2px 8px rgba(127, 90, 240, 0.5)",
+                                boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
                             }}
                         >
                             Add New
@@ -370,11 +390,11 @@ const Board = () => {
                                 color: theme.palette.text.primary,
                                 border: "2px solid",
                                 borderColor: "#000",
-                                backgroundColor: theme.palette.background.paper,
-                                borderRadius: 2,
-                                width: 32,
-                                height: 32,
-                                ml: 0.5,
+                                backgroundColor: theme.palette.primary.main,
+                                fontSize: "10px",
+                                px: 1.5,
+                                borderRadius: 1,
+                                minHeight: 32,
                                 boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
                             }}
                         >
