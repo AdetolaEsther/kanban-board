@@ -14,8 +14,6 @@ import {
     IconButton,
 } from "@mui/material";
 import {
-    Add,
-    FilterList,
     Settings,
     Download,
     TrendingUp,
@@ -40,6 +38,8 @@ import BoltIcon from "@mui/icons-material/Bolt";
 import HomeIcon from "@mui/icons-material/Home";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import { useTheme } from "@mui/material/styles";
+
 
 const NavItems = [
     {
@@ -79,21 +79,32 @@ const NavItems = [
         ],
     },
 ];
+
 const Home = () => {
+    const theme = useTheme();
+
     return (
-        <Box p={4}>
+        <Box
+            p={4}
+            bgcolor={theme.palette.background.default}
+            color={theme.palette.text.primary}
+        >
             <Stack direction="row" spacing={2}>
                 <Box
                     width="15%"
                     minWidth={200}
-                    bgcolor="#0a0a0a"
+                    bgcolor={theme.palette.primary.main}
                     p={1}
-                    borderRadius={2}
+                    borderRadius={theme.shape.borderRadiusSmall}
                     boxShadow={2}
                 >
                     <Stack direction="row" alignItems="center" mb={2}>
-                        <LogoDevIcon sx={{ color: "#8F87F1" }} />
-                        <Typography variant="h6" fontWeight={500} color="white">
+                        <LogoDevIcon sx={{ color: "#b497f7 " }} />
+                        <Typography
+                            variant="h6"
+                            fontWeight={500}
+                            color={theme.palette.text.primary}
+                        >
                             Project Inc.
                         </Typography>
                     </Stack>
@@ -102,20 +113,20 @@ const Home = () => {
                             <Box key={index} sx={{ mb: 1 }}>
                                 <ListItemButton
                                     sx={{
-                                        color: "#fff",
+                                        color: theme.palette.text.primary,
                                         px: 1.5,
-                                        borderRadius: 2,
+                                        borderRadius:
+                                            theme.shape.borderRadiusSmall,
                                         minHeight: 40,
                                         fontSize: "10px",
                                         display: "flex",
                                         alignItems: "center",
                                         py: 1,
-
                                         "&:hover": {
-                                            backgroundColor: "#171717",
-                                            border: "2px solid #000",
-                                            boxShadow:
-                                                "0px 2px 6px rgba(0, 0, 0, 0.4)",
+                                            backgroundColor:
+                                                theme.palette.action.hover,
+                                            border: `2px solid ${theme.palette.primary.dark}`,
+                                            boxShadow: theme.shadows[4],
                                         },
                                     }}
                                 >
@@ -126,6 +137,8 @@ const Home = () => {
                                             alignItems: "center",
                                             "& svg": {
                                                 fontSize: "14px",
+                                                color: theme.palette.primary
+                                                    .contrastText,
                                             },
                                         }}
                                     >
@@ -136,6 +149,7 @@ const Home = () => {
                                         primaryTypographyProps={{
                                             fontSize: "10px",
                                             fontWeight: 500,
+                                            color: theme.palette.text.primary,
                                         }}
                                     />
                                 </ListItemButton>
@@ -152,22 +166,25 @@ const Home = () => {
                                                 pl: 3,
                                                 py: 0.5,
                                                 minHeight: 32,
-                                                color: "#ccc",
+                                                color: theme.palette.text
+                                                    .secondary,
                                                 fontSize: "9px",
                                                 borderRadius: 1.5,
                                                 mb: 0.5,
-
                                                 "& svg": {
                                                     fontSize: "12px",
                                                     mr: 1,
+                                                    color: theme.palette.text
+                                                        .secondary,
                                                 },
-
                                                 "&:hover": {
-                                                    color: "white",
-                                                    backgroundColor: "#121212",
-                                                    border: "1px solid #000",
-                                                    boxShadow:
-                                                        "0px 2px 4px rgba(0, 0, 0, 0.3)",
+                                                    color: theme.palette.text
+                                                        .primary,
+                                                    backgroundColor:
+                                                        theme.palette.background
+                                                            .default,
+                                                    border: `1px solid ${theme.palette.primary.dark}`,
+                                                    boxShadow: theme.shadows[2],
                                                 },
                                             }}
                                         >
@@ -200,7 +217,11 @@ const Home = () => {
                         alignItems="center"
                         mb={2}
                     >
-                        <Typography variant="h4" fontWeight={600}>
+                        <Typography
+                            variant="h4"
+                            fontWeight={600}
+                            color={theme.palette.text.primary}
+                        >
                             Dashboard CRM
                         </Typography>
 
@@ -211,15 +232,20 @@ const Home = () => {
                                     <BoltIcon sx={{ fontSize: "10px" }} />
                                 }
                                 sx={{
-                                    color: "#fff",
-                                    border: "2px solid",
-                                    borderColor: "#000",
-                                    backgroundColor: "#171717",
+                                    color: theme.palette.text.primary,
+                                    border: `2px solid ${theme.palette.divider}`,
+                                    backgroundColor:
+                                        theme.palette.background.paper,
                                     fontSize: "10px",
                                     px: 1.5,
-                                    borderRadius: 2,
+                                    borderRadius: theme.shape.borderRadius,
                                     minHeight: 32,
-                                    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
+                                    boxShadow: theme.shadows[4],
+                                    "&:hover": {
+                                        backgroundColor:
+                                            theme.palette.action.hover,
+                                        borderColor: theme.palette.primary.main,
+                                    },
                                 }}
                             >
                                 Upgrade
@@ -235,15 +261,21 @@ const Home = () => {
                         mb={2}
                     >
                         <Stack direction="row" spacing={2} alignItems="center">
-                            <Typography variant="body1" color="#ccc">
+                            <Typography
+                                variant="body1"
+                                color={theme.palette.text.secondary}
+                            >
                                 Total Tasks: <strong>{6}</strong>
                             </Typography>
                             <Divider
                                 orientation="vertical"
                                 flexItem
-                                sx={{ borderColor: "#555" }}
+                                sx={{ borderColor: theme.palette.divider }}
                             />
-                            <Typography variant="body2" color="#999">
+                            <Typography
+                                variant="body2"
+                                color={theme.palette.text.disabled}
+                            >
                                 Last updated 4 hours ago
                             </Typography>
                         </Stack>
@@ -255,48 +287,65 @@ const Home = () => {
                                     <ShareIcon sx={{ fontSize: "10px" }} />
                                 }
                                 sx={{
-                                    color: "#fff",
-                                    border: "2px solid",
-                                    borderColor: "#000",
-                                    backgroundColor: "#171717",
+                                    color: theme.palette.text.primary,
+                                    border: `2px solid ${theme.palette.divider}`,
+                                    backgroundColor:
+                                        theme.palette.background.paper,
                                     fontSize: "10px",
                                     px: 1.5,
-                                    borderRadius: 2,
+                                    borderRadius: theme.shape.borderRadiusSmall,
                                     minHeight: 32,
-                                    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
+                                    boxShadow: theme.shadows[4],
+                                    "&:hover": {
+                                        backgroundColor:
+                                            theme.palette.action.hover,
+                                        borderColor: theme.palette.primary.main,
+                                    },
                                 }}
                             >
                                 Share
                             </Button>
+
                             <Button
                                 variant="outlined"
                                 startIcon={
                                     <AnchorIcon sx={{ fontSize: "small" }} />
                                 }
                                 sx={{
-                                    color: "#fff",
-                                    border: "2px solid",
-                                    borderColor: "#000",
-                                    backgroundColor: "#171717",
+                                    color: theme.palette.text.primary,
+                                    border: `2px solid ${theme.palette.divider}`,
+                                    backgroundColor:
+                                        theme.palette.background.paper,
                                     fontSize: "10px",
                                     px: 1.5,
-                                    borderRadius: 2,
+                                    borderRadius: theme.shape.borderRadius,
                                     minHeight: 32,
-                                    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
+                                    boxShadow: theme.shadows[4],
+                                    "&:hover": {
+                                        backgroundColor:
+                                            theme.palette.action.hover,
+                                        borderColor: theme.palette.primary.main,
+                                    },
                                 }}
                             >
                                 Request
                             </Button>
+
                             <IconButton
                                 sx={{
-                                    color: "#fff",
-                                    border: "2px solid",
-                                    borderColor: "#000",
-                                    backgroundColor: "#171717",
-                                    borderRadius: 2,
+                                    color: theme.palette.text.primary,
+                                    border: `2px solid ${theme.palette.divider}`,
+                                    backgroundColor:
+                                        theme.palette.background.paper,
+                                    borderRadius: theme.shape.borderRadius,
                                     width: 32,
                                     height: 32,
-                                    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
+                                    boxShadow: theme.shadows[4],
+                                    "&:hover": {
+                                        backgroundColor:
+                                            theme.palette.action.hover,
+                                        borderColor: theme.palette.primary.main,
+                                    },
                                 }}
                             >
                                 <Download sx={{ fontSize: "18px" }} />
@@ -304,14 +353,19 @@ const Home = () => {
 
                             <IconButton
                                 sx={{
-                                    color: "#fff",
-                                    border: "2px solid",
-                                    borderColor: "#000",
-                                    backgroundColor: "#171717",
-                                    borderRadius: 2,
+                                    color: theme.palette.text.primary,
+                                    border: `2px solid ${theme.palette.divider}`,
+                                    backgroundColor:
+                                        theme.palette.background.paper,
+                                    borderRadius: theme.shape.borderRadius,
                                     width: 32,
                                     height: 32,
-                                    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.4)",
+                                    boxShadow: theme.shadows[4],
+                                    "&:hover": {
+                                        backgroundColor:
+                                            theme.palette.action.hover,
+                                        borderColor: theme.palette.primary.main,
+                                    },
                                 }}
                             >
                                 <Settings />
@@ -322,7 +376,7 @@ const Home = () => {
                     <Breadcrumbs
                         separator="/"
                         aria-label="breadcrumb"
-                        sx={{ color: "#bbb", mb: 2 }}
+                        sx={{ color: theme.palette.text.secondary, mb: 2 }}
                     >
                         <Link
                             underline="hover"
@@ -346,7 +400,7 @@ const Home = () => {
                             Dashboard
                         </Link>
                         <Typography
-                            color="#888"
+                            color={theme.palette.text.disabled}
                             sx={{ display: "flex", alignItems: "center" }}
                         >
                             <AssignmentIcon
@@ -363,5 +417,6 @@ const Home = () => {
         </Box>
     );
 };
+
 export default Home;
 

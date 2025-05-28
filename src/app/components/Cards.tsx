@@ -26,14 +26,14 @@ const TaskCard: React.FC<TaskCardProps> = ({
     priority,
     title,
     description,
-    assigneeInitial = "A",
+    assigneeInitial = "ABC",
     status,
     date,
 }) => {
     return (
         <Card
             sx={{
-                backgroundColor: theme.palette.background.paper,
+                backgroundColor: theme.palette.background.default,
                 borderRadius: 2,
                 boxShadow: "0 0 0 1px #333",
                 overflow: "hidden",
@@ -92,7 +92,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
                                     width: 24,
                                     height: 24,
                                     fontSize: 12,
-                                    bgcolor: "#444", 
+                                    bgcolor: "#444",
                                 }}
                             >
                                 {assigneeInitial}
@@ -121,7 +121,16 @@ const TaskCard: React.FC<TaskCardProps> = ({
                     alignItems="center"
                 >
                     <Stack direction="row" spacing={0.5}>
-                        <Tooltip title="Comments">
+                        <Tooltip
+                            title="Comments"
+                            sx={{
+                                backgroundColor: theme.palette.action.hover,
+                                "&:hover": {
+                                    backgroundColor: theme.palette.action.hover,
+                                    borderColor: theme.palette.primary.main,
+                                },
+                            }}
+                        >
                             <IconButton size="small">
                                 <Comment
                                     sx={{
@@ -131,7 +140,16 @@ const TaskCard: React.FC<TaskCardProps> = ({
                                 />
                             </IconButton>
                         </Tooltip>
-                        <Tooltip title="Attachments">
+                        <Tooltip
+                            title="Attachments"
+                            sx={{
+                                backgroundColor: theme.palette.action.hover,
+                                "&:hover": {
+                                    backgroundColor: theme.palette.action.hover,
+                                    borderColor: theme.palette.primary.main,
+                                },
+                            }}
+                        >
                             <IconButton size="small">
                                 <AttachFile
                                     sx={{
@@ -141,7 +159,16 @@ const TaskCard: React.FC<TaskCardProps> = ({
                                 />
                             </IconButton>
                         </Tooltip>
-                        <Tooltip title="Files">
+                        <Tooltip
+                            title="Files"
+                            sx={{
+                                backgroundColor: theme.palette.action.hover,
+                                "&:hover": {
+                                    backgroundColor: theme.palette.action.hover,
+                                    borderColor: theme.palette.primary.main,
+                                },
+                            }}
+                        >
                             <IconButton size="small">
                                 <Description
                                     sx={{
