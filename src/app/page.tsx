@@ -238,7 +238,7 @@ const Home = () => {
                                         theme.palette.background.paper,
                                     fontSize: "10px",
                                     px: 1.5,
-                                    borderRadius: theme.shape.borderRadius,
+                                    borderRadius: 1,
                                     minHeight: 32,
                                     boxShadow: theme.shadows[4],
                                     "&:hover": {
@@ -293,7 +293,7 @@ const Home = () => {
                                         theme.palette.background.paper,
                                     fontSize: "10px",
                                     px: 1.5,
-                                    borderRadius: theme.shape.borderRadiusSmall,
+                                    borderRadius: 1,
                                     minHeight: 32,
                                     boxShadow: theme.shadows[4],
                                     "&:hover": {
@@ -318,7 +318,7 @@ const Home = () => {
                                         theme.palette.background.paper,
                                     fontSize: "10px",
                                     px: 1.5,
-                                    borderRadius: theme.shape.borderRadius,
+                                    borderRadius: 1,
                                     minHeight: 32,
                                     boxShadow: theme.shadows[4],
                                     "&:hover": {
@@ -334,12 +334,11 @@ const Home = () => {
                             <IconButton
                                 sx={{
                                     color: theme.palette.text.primary,
-                                    border: `2px solid ${theme.palette.divider}`,
+                                    // border: `2px solid ${theme.palette.divider}`,
                                     backgroundColor:
                                         theme.palette.background.paper,
                                     borderRadius: theme.shape.borderRadius,
-                                    width: 32,
-                                    height: 32,
+                                   
                                     boxShadow: theme.shadows[4],
                                     "&:hover": {
                                         backgroundColor:
@@ -354,12 +353,11 @@ const Home = () => {
                             <IconButton
                                 sx={{
                                     color: theme.palette.text.primary,
-                                    border: `2px solid ${theme.palette.divider}`,
+                                    // border: `2px solid ${theme.palette.divider}`,
                                     backgroundColor:
                                         theme.palette.background.paper,
                                     borderRadius: theme.shape.borderRadius,
-                                    width: 32,
-                                    height: 32,
+                                    
                                     boxShadow: theme.shadows[4],
                                     "&:hover": {
                                         backgroundColor:
